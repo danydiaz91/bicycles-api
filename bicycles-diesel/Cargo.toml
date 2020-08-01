@@ -1,5 +1,5 @@
 [package]
-name = "bicycles-core"
+name = "bicycles-diesel"
 version = "0.1.0"
 authors = ["Dany Diaz <dany.diaz91@hotmail.com>"]
 edition = "2018"
@@ -7,8 +7,8 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-serde = { version = "1.0.114", features = ["derive"] }
-chrono = { version = "0.4.13", features = ["serde"] }
+bicycles-core = { path = "../bicycles-core" }
+chrono = { version = "0.4", features = ["serde"] }
+diesel = { version = "1.4.4", features = ["postgres", "uuidv07", "chrono"] }
+dotenv = "0.15.0"
 uuid = { version = "0.8", features = ["serde", "v4"] }
-strum = "0.18.0"
-strum_macros = "0.18.0"
