@@ -1,5 +1,6 @@
 [workspace]
 members = [
     "bicycles-core",
-    "bicycles-diesel"
+    "bicycles-diesel",
+    "bicycles-actix"
 ]
