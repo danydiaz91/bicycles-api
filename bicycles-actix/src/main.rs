@@ -1,17 +1,21 @@
 use actix_rt;
-use actix_web::{App, HttpResponse, HttpServer, Responder, web};
+use actix_web::{App, HttpServer};
+
+use bicycles_diesel::BicycleRepository;
+use controllers::AppState;
+
+mod controllers;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {
         App::new()
-            .route("/", web::get().to(index))
+            .data(AppState {
+                bicycle_repository: BicycleRepository::new()
+            })
+            .configure(controllers::routes)
     })
     .bind("127.0.0.1:8080")?
     .run()
     .await
-}
-
-async fn index() -> impl Responder {
-    HttpResponse::Ok().body("Hola Mundo!")
 }

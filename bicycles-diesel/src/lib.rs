@@ -28,8 +28,14 @@ fn establish_connection() -> Result<PgConnection, String> {
 }
 pub struct BicycleRepository;
 
+impl BicycleRepository {
+    pub fn new() -> Self {
+        BicycleRepository{}
+    }
+}
+
 impl Repository<Bicycle> for BicycleRepository {
-    fn get_by_id(bicycle_id: Uuid) -> Result<Bicycle, String> {
+    fn get_by_id(&self, bicycle_id: Uuid) -> Result<Bicycle, String> {
         let connection = establish_connection()?;
         bicycles.find(bicycle_id)
             .first::<BicycleDB>(&connection)
@@ -37,7 +43,7 @@ impl Repository<Bicycle> for BicycleRepository {
             .map_err(|error| error.to_string())
     }
 
-    fn get_all() -> Vec<Bicycle> {
+    fn get_all(&self) -> Vec<Bicycle> {
         let bicycles_op = |list: Vec<BicycleDB>| -> Vec<Bicycle> {
                 list.into_iter()
                 .map(|bicycle_db| Bicycle::from(bicycle_db))
@@ -58,7 +64,7 @@ impl Repository<Bicycle> for BicycleRepository {
         }
     }
 
-    fn create(bicycle: Bicycle) -> Result<Bicycle, String> {
+    fn create(&self, bicycle: Bicycle) -> Result<Bicycle, String> {
         let bicycle_db: BicycleDB = bicycle.into();
         let insert_op = |connection| diesel::insert_into(bicycles::table)
                 .values(&bicycle_db)
@@ -70,7 +76,7 @@ impl Repository<Bicycle> for BicycleRepository {
             .map(insert_op)?
     }
 
-    fn update(bicycle: Bicycle) -> Result<Bicycle, String> {
+    fn update(&self, bicycle: Bicycle) -> Result<Bicycle, String> {
         let bicycle_db: BicycleDB = bicycle.into();
         let update_op = |connection| diesel::update(bicycles.find(bicycle_db.id))
             .set(&bicycle_db)
@@ -82,7 +88,7 @@ impl Repository<Bicycle> for BicycleRepository {
             .map(update_op)?
     }
 
-    fn delete(bicycle_id: Uuid) -> bool {
+    fn delete(&self, bicycle_id: Uuid) -> bool {
         let delete_op = |connection| diesel::delete(bicycles.find(bicycle_id))
                 .execute(&connection)
                 .map(|rows| rows > 0);
