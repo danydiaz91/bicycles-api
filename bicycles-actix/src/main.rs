@@ -5,6 +5,7 @@ use bicycles_diesel::BicycleRepository;
 use controllers::AppState;
 
 mod controllers;
+mod models;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {

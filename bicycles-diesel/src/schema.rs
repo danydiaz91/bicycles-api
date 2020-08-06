@@ -1,8 +1,8 @@
 table! {
     bicycles (id) {
-        id -> Uuid,
+        id -> Nullable<Uuid>,
         owner_id -> Uuid,
         color -> Nullable<Varchar>,
-        created_at -> Timestamp,
+        created_at -> Nullable<Timestamp>,
     }
 }

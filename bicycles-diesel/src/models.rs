@@ -11,10 +11,10 @@ use crate::schema::bicycles;
 #[derive(Queryable, Insertable, AsChangeset)]
 #[table_name = "bicycles"]
 pub struct BicycleDB {
-    pub id: Uuid,
+    pub id: Option<Uuid>,
     pub owner_id: Uuid,
     pub color: Option<String>,
-    pub created_at: NaiveDateTime
+    pub created_at: Option<NaiveDateTime>
 }
 
 impl From<Bicycle> for BicycleDB {

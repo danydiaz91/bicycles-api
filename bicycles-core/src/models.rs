@@ -4,10 +4,10 @@ use serde::{Serialize, Deserialize};
 use strum_macros::{Display, EnumString};
 #[derive(Serialize, Deserialize)]
 pub struct Bicycle {
-    pub id: Uuid,
+    pub id: Option<Uuid>,
     pub owner_id: Uuid,
     pub color: Option<Color>,
-    pub created_at: NaiveDateTime
+    pub created_at: Option<NaiveDateTime> 
 }
 
 #[derive(Serialize, Deserialize, Display, EnumString)]
